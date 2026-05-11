@@ -23,7 +23,9 @@ ANTHROPIC_API_KEY = "YOUR_ANTHROPIC_API_KEY_HERE"
 ANTHROPIC_MODEL   = "claude-sonnet-4-20250514"
 
 EMAIL_FROM     = "faaiqgpt@gmail.com"
-EMAIL_PASSWORD = "resa vrrd ujmy jzza"
+import os
+EMAIL_PASSWORD = os.environ['Dubai7909@']
+--EMAIL_PASSWORD = "resa vrrd ujmy jzza"
 EMAIL_TO       = ["faaiq@halfwaygo.co.za", "faaiqdavids@gmail.com"]
 
 WHATSAPP_ENABLED = True
