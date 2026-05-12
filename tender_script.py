@@ -19,7 +19,7 @@ HISTORY_FILE      = "tender_history_master.xlsx"
 MASTER_90DAY_FILE = "vehicle_tenders_90day_master.xlsx"
 os.makedirs("tender_documents", exist_ok=True)
 
-ANTHROPIC_API_KEY = "YOUR_ANTHROPIC_API_KEY_HERE"
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 ANTHROPIC_MODEL   = "claude-sonnet-4-20250514"
 
 EMAIL_FROM     = "faaiqgpt@gmail.com"
