@@ -1,0 +1,38 @@
+name: Vehicle Tender Alerts
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+    - cron: '0 6 * * 4'
+
+  workflow_dispatch:
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install packages
+        run: |
+          pip install requests pandas openpyxl beautifulsoup4 lxml
+
+      - name: Run Tender Script
+        env:
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        run: python tender_script.py
+
+      - name: Upload Reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: vehicle-tender-reports
+          path: |
+            *.xlsx
+            *.csv
