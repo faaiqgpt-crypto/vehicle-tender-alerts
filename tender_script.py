@@ -13,7 +13,7 @@ from email.mime.application import MIMEApplication
 # ============================================================
 #  SETTINGS
 # ============================================================
-FIRST_RUN = True
+FIRST_RUN = False
 
 HISTORY_FILE      = "tender_history_master.xlsx"
 MASTER_90DAY_FILE = "vehicle_tenders_90day_master.xlsx"
