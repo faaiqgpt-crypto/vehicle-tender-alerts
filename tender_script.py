@@ -207,10 +207,17 @@ def get_ai_summaries(tenders_df):
                 items.append(f"{i}. {title}")
             ocids.append(str(row['ocid']))
         prompt = (
-            "For each numbered tender below write ONE summary sentence (max 20 words): "
-            "what is being procured and by which department. "
-            "Return ONLY a JSON array of strings in the same order. No markdown, no extra text.\n\n"
+            "For each numbered tender below:\n"
+            "1. Summarize the procurement in under 20 words\n"
+            "2. State whether it is:\n"
+            "   - HIGHLY VEHICLE RELATED\n"
+            "   - POSSIBLY VEHICLE RELATED\n"
+            "   - LOW VEHICLE RELEVANCE\n\n"
+            "Return ONLY a JSON array like:\n"
+            '[{"summary": "...", "relevance": "HIGHLY VEHICLE RELATED"}]\n'
+            "No markdown, no extra text.\n\n"
             + "\n".join(items)
+        )
             """
             For each numbered tender below:
 
@@ -249,7 +256,13 @@ def get_ai_summaries(tenders_df):
                 raw = raw.split("```")[1]
                 if raw.startswith("json"): raw = raw[4:]
             summaries = json.loads(raw.strip())
-            all_summaries.update(dict(zip(ocids, summaries)))
+            # summaries is now a list of dicts — extract the summary string
+            summary_strings = [
+                (s.get("summary", "") + " [" + s.get("relevance", "") + "]")
+                if isinstance(s, dict) else str(s)
+                for s in summaries
+            ]
+            all_summaries.update(dict(zip(ocids, summary_strings)))
             print(f"  AI batch {b//BATCH_SIZE+1}: {len(summaries)} summaries OK")
             time.sleep(0.5)
         except Exception as e:
