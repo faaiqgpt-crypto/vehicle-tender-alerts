@@ -24,8 +24,7 @@ ANTHROPIC_MODEL   = "claude-sonnet-4-20250514"
 
 EMAIL_FROM     = "faaiqgpt@gmail.com"
 import os
-EMAIL_PASSWORD = os.environ['Dubai7909@']
---EMAIL_PASSWORD = "resa vrrd ujmy jzza"
+EMAIL_PASSWORD = os.environ['resa vrrd ujmy jzza']
 EMAIL_TO       = ["faaiq@halfwaygo.co.za", "faaiqdavids@gmail.com"]
 
 WHATSAPP_ENABLED = True
