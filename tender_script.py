@@ -251,7 +251,28 @@ def get_ai_summaries(tenders_df):
     return all_summaries
 
 print("\nGenerating AI summaries...")
-ai_summaries = get_ai_summaries(new_tenders)
+
+# Load any real summaries already saved in the master file
+existing_summaries = {}
+if os.path.exists(MASTER_90DAY_FILE):
+    try:
+        old = pd.read_excel(MASTER_90DAY_FILE, engine='openpyxl')
+        if 'ai_summary' in old.columns:
+            for _, r in old.iterrows():
+                summ = str(r.get('ai_summary', '')).strip()
+                desc = str(r.get('description', '')).strip()
+                # Only keep it if it's a real summary (short and not identical to description)
+                if summ and summ != desc and len(summ) < 300:
+                    existing_summaries[str(r['ocid'])] = summ
+    except Exception:
+        pass
+
+# Summarise rows that have no real summary yet
+needs_summary = relevant_df[
+    ~relevant_df['ocid'].isin(existing_summaries)
+].copy()
+print(f"Rows needing AI summary: {len(needs_summary)}")
+ai_summaries = {**existing_summaries, **get_ai_summaries(needs_summary)}
 
 # AI fallback: use full description if no AI summary available
 def resolve_summary(row):
