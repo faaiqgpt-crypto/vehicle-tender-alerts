@@ -218,25 +218,6 @@ def get_ai_summaries(tenders_df):
             "No markdown, no extra text.\n\n"
             + "\n".join(items)
         )
-            """
-            For each numbered tender below:
-
-            1. Summarize the procurement in under 20 words
-            2. State whether it is:
-               - HIGHLY VEHICLE RELATED
-               - POSSIBLY VEHICLE RELATED
-               - LOW VEHICLE RELEVANCE
-            
-            Return ONLY a JSON array like:
-            
-            [
-              {
-                "summary": "...",
-                "relevance": "HIGHLY VEHICLE RELATED"
-              }
-            ]
-            """
-        )
         try:
             r = requests.post(
                 "https://api.anthropic.com/v1/messages",
