@@ -2,8 +2,8 @@ name: Vehicle Tender Alerts
 
 on:
   schedule:
-    - cron: '0 8 * * 1'
-    - cron: '0 8 * * 4'
+    - cron: '17 9 * * 1'
+    - cron: '17 9 * * 4'
 
   workflow_dispatch:
 
